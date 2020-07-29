@@ -27,9 +27,9 @@ MKDIR = mkdir -p
 
 # 'runtime' uses pulseaudio if it is running, else uses portaudio
 #AUDIO = runtime
-AUDIO = portaudio
+#AUDIO = portaudio
 #AUDIO = portaudio0
-#AUDIO = portaudio2
+AUDIO = portaudio2
 #AUDIO = pulseaudio
 #AUDIO = sada
 
@@ -55,8 +55,8 @@ USE_AUDIO=-DUSE_PORTAUDIO
 else
 ifeq ($(AUDIO),portaudio2)
 WAVE=wave.cpp
-LIB_AUDIO=/usr/lib/libportaudio.so.2
-USE_AUDIO=-DUSE_PORTAUDIO
+LIB_AUDIO=/usr/lib64/libportaudio.so.2
+USE_AUDIO=-DUSE_PORTAUDIO=19
 else
 ifeq ($(AUDIO),sada)
 WAVE=wave_sada.cpp
@@ -93,7 +93,7 @@ SRCS3 = espeak.cpp
 OBJS3=$(patsubst %.cpp,%.o,$(SRCS3))
 LIBS3=-lstdc++ -L . -lespeak
 
-CXXFLAGS=-O2
+CXXFLAGS=-O2 -Wno-narrowing
 
 
 all: $(BIN_NAME) $(LIB_NAME) $(STATIC_LIB_NAME) $(BIN2_NAME)
